@@ -3,7 +3,7 @@
 }
 
 body {
-  background-color: #ADD1BC;
+  background: linear-gradient(to bottom right, #ADD1BC, #D8BA82);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -26,4 +26,38 @@ body {
   width: 220px;
   border: none;
   border-radius: 10px;
+  margin-left: 5px;
+  color: white;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  font-size: 40px;
+  padding-right: 5px;
+}
+
+.grid {
+  padding: 3px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  margin-left: 2px;
+}
+
+.grid button {
+  width: 51px;
+  height: 51px;
+  border-radius: 3px;
+  border: none;
+  margin: 2px;
+  background-color: #AAA6DE;
+  color: white;
+}
+
+.grid button.left {
+  margin-left: -54px;
+}
+
+.grid button.equal {
+  width: 108px;
+  background-color: #EA725F;
 }

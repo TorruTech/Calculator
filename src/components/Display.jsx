@@ -1,6 +1,8 @@
 
 export const Display = (value) => {
     return (
-        <input className="display" type="number" value={value}/>
+        <div className="display" type="number" value={value}>
+            0
+        </div>
     );
 }
