@@ -1,8 +1,9 @@
 
-export const Display = (value) => {
+
+export const Display = ({ displayValue }) => {
     return (
-        <div className="display" type="number" value={value}>
-            0
+        <div className="display">
+            {displayValue}
         </div>
     );
-}
+};

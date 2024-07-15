@@ -33,6 +33,7 @@ body {
   align-items: center;
   font-size: 40px;
   padding-right: 5px;
+  overflow: hidden;
 }
 
 .grid {
@@ -51,6 +52,13 @@ body {
   margin: 2px;
   background-color: #AAA6DE;
   color: white;
+  cursor: pointer;
+  transition-duration: 0.3s;
+}
+
+.grid button:hover {
+  transform: scale(1.1);
+  transition-duration: 0.3s;
 }
 
 .grid button.left {
@@ -60,4 +68,8 @@ body {
 .grid button.equal {
   width: 108px;
   background-color: #EA725F;
+}
+
+.grid button.equal:hover {
+  transform: scale(1.05);
 }
