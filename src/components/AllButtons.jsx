@@ -1,77 +1,83 @@
 import { useState } from "react";
 
 export const AllButtons = ({ updateDisplay }) => {
-    const [currentValue, setCurrentValue] = useState(''); 
-    const [previousValue, setPreviousValue] = useState('');
-    const [operator, setOperator] = useState(''); 
+    const [currentValue, setCurrentValue] = useState(""); 
+    const [previousValue, setPreviousValue] = useState("");
+    const [display, setDisplay] = useState("0");
+    const [operator, setOperator] = useState("");
 
-    const handleNumberClick = (value) => {
-        setCurrentValue((prev) => prev + value);
-        updateDisplay(value)
-    };
-
-    const handleOperatorClick = (op) => {
-        if (op === 'n') {
-            // Cambio de signo
-            if (currentValue !== '') {
-                const newValue = parseFloat(currentValue) * -1;
-                setCurrentValue(newValue.toString());
-                updateDisplay(newValue.toString());
+    const handleNumberClick = (number) => {
+        // Verificar si el display actual es "0"
+        if (display === "0") {
+            if (number === ".") {
+                setDisplay("0" + number);
+                setCurrentValue("0" + number);
+                updateDisplay("0" + number);
             } else {
-                // Manejar el caso donde no hay un valor actual
-                // Aquí podrías optar por mostrar un mensaje de error o no hacer nada
-                console.error('No hay un valor actual para cambiar de signo.');
+                setDisplay(number);
+                setCurrentValue(number);
+                updateDisplay(number);
             }
         } else {
-            // Operadores +, -, X, /
-            if (currentValue !== '') {
-                // Si hay un valor actual, se considera como el primer operando
-                setPreviousValue(currentValue);
-                setCurrentValue('');
-                setOperator(op);
-                updateDisplay(op);
-            } else {
-                console.error('No hay un valor actual para la operación.');
+            // Si el display no es "0", concatenar número o punto decimal
+            if (number === "." && !currentValue.includes(".")) {
+                setCurrentValue(prevValue => prevValue + number);
+                setDisplay(prevDisplay => prevDisplay + number);
+                updateDisplay(display + number);
+            } else if (number !== ".") {
+                setCurrentValue(prevValue => prevValue + number);
+                setDisplay(prevDisplay => prevDisplay + number);
+                updateDisplay(display + number);
             }
         }
     };
     
+    const handleOperatorClick = (clickedOperator) => {
+        
+        setOperator(clickedOperator);
+        setPreviousValue(currentValue);
+        setCurrentValue("");
+        updateDisplay(clickedOperator);
+    };
+
 
     const handleEqualClick = () => {
-        if (previousValue !== '' && currentValue !== '') {
-            let result;
-            switch (operator) {
-                case '+':
-                    result = parseFloat(previousValue) + parseFloat(currentValue);
-                    break;
-                case '-':
-                    result = parseFloat(previousValue) - parseFloat(currentValue);
-                    break;
-                case 'X':
-                    result = parseFloat(previousValue) * parseFloat(currentValue);
-                    break;
-                case '/':
-                    result = parseFloat(previousValue) / parseFloat(currentValue);
-                    break;
-                case 'n':
-                    result = parseFloat(currentValue * -1);
-                    break;
-                default:
-                    result = '';
-                    break;
-            }
-            updateDisplay(currentValue, result);
-            setCurrentValue(result.toString());
-            setPreviousValue('');
-            setOperator('');
+
+        let opResult = 0;
+    
+        switch (operator) {
+            case "+":
+                opResult = parseFloat(previousValue) + parseFloat(currentValue);
+                break;
+            case "-":
+                opResult = parseFloat(previousValue) - parseFloat(currentValue);
+                break;
+            case "X":
+                opResult = parseFloat(previousValue) * parseFloat(currentValue);
+                break;
+            case "/":
+                opResult = parseFloat(previousValue) / parseFloat(currentValue);
+                break;
+            default:
+                opResult = parseFloat(currentValue);
+                break;
         }
+
+        opResult = opResult.toFixed(2);
+
+        setCurrentValue(opResult.toString()); // Limpiar el currentValue para una nueva entrada de número
+        setPreviousValue("")
+        setOperator(""); // Limpiar el operador para esperar una nueva operación
+        setDisplay(opResult.toString());
+        updateDisplay(opResult.toString());
     };
 
     const handleResetClick = () => {
-        setCurrentValue('');
-        setPreviousValue('');
-        setOperator('');
-        updateDisplay('C');
+        setPreviousValue("");
+        setCurrentValue("");
+        setDisplay("0");
+        updateDisplay("0");
+        setOperator("");
     };
 
     return (
