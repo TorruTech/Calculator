@@ -8,6 +8,12 @@ export const AllButtons = ({ updateDisplay }) => {
 
     const handleNumberClick = (number) => {
         // Verificar si el display actual es "0"
+
+        if (currentValue.length > 9) {
+            alert("No se pueden añadir más numeros")
+            return
+        }
+
         if (display === "0") {
             if (number === ".") {
                 setDisplay("0" + number);
@@ -32,14 +38,19 @@ export const AllButtons = ({ updateDisplay }) => {
         }
     };
     
-    const handleOperatorClick = (clickedOperator) => {
-        
-        setOperator(clickedOperator);
+    const handleOperatorClick = (operator) => {
+
+        if (operator === "%" || operator === "n") {
+            return
+        }
+
+        setOperator(operator);
         setPreviousValue(currentValue);
         setCurrentValue("");
-        updateDisplay(clickedOperator);
-    };
+        updateDisplay(operator); // Aquí deberías pasar display
+        setDisplay("0");
 
+    };
 
     const handleEqualClick = () => {
 
